@@ -6,6 +6,9 @@ public class RegisteredUser extends User{
 	private int DOB;
 	private String userName;
 	private String password;
+	private String address;
+	private String email;
+	private int contactNumber;
 	
 	public RegisteredUser (){
 		this.firstName = null;
@@ -89,5 +92,29 @@ public class RegisteredUser extends User{
 		if (pswd != null){
 			this.password = pswd;
 		}
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public int getContactNumber() {
+		return contactNumber;
+	}
+
+	public void setContactNumber(int contactNumber) {
+		this.contactNumber = contactNumber;
 	}
 }

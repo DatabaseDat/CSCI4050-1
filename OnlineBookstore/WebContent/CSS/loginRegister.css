@@ -79,7 +79,6 @@ h1 {
 }
 
 label {
-  position: absolute;
   -webkit-transform: translateY(6px);
           transform: translateY(6px);
   left: 13px;
@@ -96,7 +95,7 @@ label .req {
 }
 
 label.active {
-  -webkit-transform: translateY(50px);
+ -webkit-transform: translateY(50px);
           transform: translateY(50px);
   left: 2px;
   font-size: 14px;
@@ -163,7 +162,7 @@ textarea {
   letter-spacing: .1em;
   background: #337AB7;
   color: #ffffff;
-  -webkit-transition: all 0.5s ease;
+ -webkit-transition: all 0.5s ease;
   transition: all 0.5s ease;
   -webkit-appearance: none;
 }

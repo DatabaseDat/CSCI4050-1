@@ -55,10 +55,10 @@ public class BookstoreServlet extends HttpServlet {
 	}
 
 //--------------------LOGIN --------------------------------------------------------------------------------------------------------------------------------- 
-	public void login(HttpServletRequest request, HttpServletResponse response){
+	public void login(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
 		DefaultObjectWrapperBuilder db = new DefaultObjectWrapperBuilder(Configuration.VERSION_2_3_25);
 		SimpleHash root = new SimpleHash(db.build());
-
+		String templateName = null;
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		
@@ -68,16 +68,24 @@ public class BookstoreServlet extends HttpServlet {
     	//success = 1 means the user was found with matching password and is allowed to log in
     	//success = 0 means incorrect login or password
   		int success = ctrl.checkUserLogin(username, hash);
+  		String firstName = ctrl.getFirstName(username);
   		
 		if (success == 1){
-			System.out.println("login success");
+			request.setAttribute("name", ctrl.getFirstName(username));
+			request.getRequestDispatcher("index.jsp").forward(request, response);
+			
   		}else{
   			System.out.println("login failed");
+  			String text = "login failed";
+
+		    response.setContentType("text/plain"); 
+		    response.setCharacterEncoding("UTF-8"); 
+		    response.getWriter().write(text); 
   		}
 	}
 
 //--------------------REGISTER ------------------------------------------------------------------------------------------------------------------------------- 
-	public void register(HttpServletRequest request, HttpServletResponse response){
+	public void register(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		DefaultObjectWrapperBuilder db = new DefaultObjectWrapperBuilder(Configuration.VERSION_2_3_25);
 		SimpleHash root = new SimpleHash(db.build());
 		
@@ -85,12 +93,9 @@ public class BookstoreServlet extends HttpServlet {
 		String lastName = request.getParameter("lastName");
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
+		String email = request.getParameter("email");
 		String hash = SecureLogin.Hash(password);
-		System.out.println(firstName);
-		System.out.println(lastName);
-		System.out.println(username);
-		System.out.println(password);
-		System.out.println(hash);
+	
 		
   		DbLogicImpl ctrl = new DbLogicImpl();
 		//checks to see if the username already exists in the database
@@ -98,8 +103,10 @@ public class BookstoreServlet extends HttpServlet {
   		int check = ctrl.checkUser(username);
   		
   		if (check == 0){
-  			ctrl.registerUser(firstName, lastName, username, password, hash);
+  			ctrl.registerUser(firstName, lastName, username, email, password, hash);
   			System.out.println("success register");
+  			request.setAttribute("name", ctrl.getFirstName(username));
+			request.getRequestDispatcher("index.jsp").forward(request, response);
   			
   		}else{
   			System.out.println("denied register");

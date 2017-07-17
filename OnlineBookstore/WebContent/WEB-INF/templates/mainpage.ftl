@@ -4,6 +4,7 @@
 <html lang="en">
 	<head>
 	  <title>Bookstore</title>
+	  
 	  <!-- Bootstrap -->
 	  <meta charset="utf-8">
 	  <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -41,7 +42,7 @@
 		        <li><a href="#">Contact</a></li>
 		      </ul>
 		      <ul class="nav navbar-nav navbar-right">
-		        <li><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-user" data-toggle="modal" data-target="#myModal"></span> Your Account</a></li>
+		        <li><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-user" data-toggle="modal" data-target="#myModal"></span> Hello ${user} </a></li>
 		        <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
 		      </ul>
 		    </div>

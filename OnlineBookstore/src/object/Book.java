@@ -54,7 +54,7 @@ public class Book {
 		this.category = c;
 	}
 	
-	public Book getBook(){
+	public Book getBookDetails(){
 		Book b = new Book();
 		b.setBookName(this.bookName);
 		b.setAuthor(this.author);
