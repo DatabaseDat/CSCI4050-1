@@ -29,9 +29,8 @@ $('.form').find('input, textarea').on('keyup blur focus', function (e) {
 });
 
 
-
 $('.tab a').on('click', function (e) {	  
-	  e.preventDefault();
+	e.preventDefault();
 	  
 	  $(this).parent().addClass('active');
 	  $(this).parent().siblings().removeClass('active');
@@ -41,7 +40,7 @@ $('.tab a').on('click', function (e) {
 	  $('.tab-content > div').not(target).hide();
 	  
 	  $(target).fadeIn(600);
-	  
 });
+
 
 /* End of login js */

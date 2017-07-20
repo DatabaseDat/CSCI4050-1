@@ -16,16 +16,15 @@ public class DbPersistImpl {
 //----------------------------------------------------------------------------------------------------------------------------------------------------------
 		//retrieves and returns user login credentials based on type of user
 		public int registerUser(String firstName, String lastName, String username, String email, String password, String hashPassword){
-			String sql = "INSERT INTO users (LastName, FirstName, Email, Password, HashedPassword, Username) VALUES"
-				+ "('"+lastName+"','"+firstName+"', '"+email+"', '"+password+"', '"+hashPassword+"', '"+username+"');";
-			
+			String sql = "INSERT INTO users1 (FirstName, LastName, Email, Password, HashedPassword, Username) VALUES"
+				+ "('"+firstName+"','"+lastName+"', '"+email+"', '"+password+"', '"+hashPassword+"', '"+username+"');";
 			return DbAccessImpl.create(sql);
 		}
 //----------------------------------------------------------------------------------------------------------------------------------------------------------		
 		//check to see if username already exists
 		public int checkUsername(String username) {
 			int success = 0;
-			String sql = "SELECT * FROM Users WHERE username = '" + username + "';";
+			String sql = "SELECT * FROM users1 WHERE username = '" + username + "';";
 			
 			ResultSet r;
 			r = DbAccessImpl.retrieve(sql);
@@ -46,12 +45,12 @@ public class DbPersistImpl {
 		//checks user login criteria
 		public int checkUserLogin(String username, String hash){
 			int success = 0;
-			String sql = "SELECT * FROM users WHERE Username = '"+username+"' AND HashedPassword = '"+hash+"'";
+			String sql = "SELECT * FROM users1 WHERE username = '"+username+"' AND HashedPassword = '"+hash+"'";
 	  		ResultSet rs = DbAccessImpl.retrieve(sql);
 	  		
 	  		try{
 	  			if(rs.next()){
-	  				if( username.equals(rs.getString("Username")) && hash.equals(rs.getString("HashedPassword")) ){
+	  				if( username.equals(rs.getString("username")) && hash.equals(rs.getString("HashedPassword")) ){
 	  					success = 1;
 	  				}
 	  			}else{
@@ -68,7 +67,7 @@ public class DbPersistImpl {
 		//get user's first name
 		public String getFirstName(String username) {
 			String name = null;
-			String sql = "SELECT firstName FROM Users WHERE username = '" + username + "';";
+			String sql = "SELECT firstName FROM users1 WHERE username = '" + username + "';";
 			ResultSet rs = DbAccessImpl.retrieve(sql);
 			
 			try{
