@@ -1,16 +1,7 @@
-<!-- Code Modified from: https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_temp_store&stacked=h -->
-<!-- Code modified from: https://colorlib.com/wp/html5-and-css3-login-forms/ -->
-<%@ taglib
-    prefix="c"
-    uri="http://java.sun.com/jsp/jstl/core" 
-%>
-<%@ page session="false" %>
-
 <!DOCTYPE html>
 <html lang="en">
 	<head>
 	  <title>Bookstore</title>
-	  
 	  <!-- Bootstrap -->
 	  <meta charset="utf-8">
 	  <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,11 +12,7 @@
 	  <!-- Ours -->
 	  <link rel="stylesheet" href="./CSS/ecommerceTemplate.css">
 	  <link rel="stylesheet" href="./CSS/loginRegister.css">
-	  <script src="./Scripts/loginRegister.js"></script>
-
-	<!--  -->
-		<script src="https://s.codepen.io/assets/libs/modernizr.js" type="text/javascript"></script>
- 	 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+	  <link rel="stylesheet" href="./CSS/cart.css">
 	</head>
 	<body>
 		<!-- HEADER -->
@@ -194,45 +181,98 @@
 					        </div>
 		</nav>
 		
-		<div id="incorrectLogin">
-			<c:if test="${not empty errorMsg}">
-   				<script>
-					window.addEventListener("load",function(){
-						alert("${errorMsg}");
-					});
-				</script>
-			</c:if>
-		</div>
 		
-		<!-- BOOK ITEMS -->
- 			<div data-role="page" >
-	         	<div class="container">    
-					<div class="row">			
-						<c:forEach items="${books}" var="b">
-							<div class="col-sm-4">
-								<div class="panel panel-primary">
-								<div class="panel-heading">${b.bookName}</div>
-								<div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
-								<div class="panel-footer">
-									Author: ${b.author}
-									<hr>
-									Description: ${b.description}
-									<hr>
-									Price: $ ${b.price}
-									<hr>
-									<form action="BookHandlerServlet" name="bookHandler" method="post">
-										<button type="submit" class="btn btn-primary btn-md" name="moreInfo" value="${b.ISBN}">View More Info</button>
-										<button type="submit" class="btn btn-primary btn-md" name="add" value="${b.ISBN}">Add to Cart</button>
-									</form>
+		<div class="container" style="width: 90%">
+			<div class="row">
+				<div class="col-xs-8" style="width: 90%">
+					<div class="panel panel-info">
+						<div style="background-color: #121E24;" class="panel-heading">
+							<div class="panel-title">
+								<div class="row">
+									<div style="background-color: #121E24;" class="col-xs-6">
+										<h5 style="background-color: #121E24; color: white;"><span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart</h5>
+									</div>
+									<div class="col-xs-6">
+										<button type="button" id="continueButton" class="btn btn-primary btn-sm btn-block">
+											<span class="glyphicon glyphicon-share-alt"></span> Continue shopping
+										</button>
+									</div>
 								</div>
+							</div>
+						</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-xs-2"><img class="img-responsive" src="./Resources/cover4.jpg">
 								</div>
-							</div> 
-	           			</c:forEach>
+								<div class="col-xs-4">
+									<h4 class="product-name"><strong>Lord of the Rings</strong></h4><h4><small></small></h4>
+								</div>
+								<div class="col-xs-6">
+									<div class="col-xs-6 text-right">
+										<h6><strong>15.00 <span class="text-muted">x</span></strong></h6>
+									</div>
+									<div class="col-xs-4">
+										<input type="text" class="form-control input-sm" value="1">
+									</div>
+									<div class="col-xs-2">
+										<button type="button" class="btn btn-link btn-xs">
+										<span class="glyphicon glyphicon-trash"> </span>
+										</button>
+									</div>
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-xs-2"><img class="img-responsive" src="./Resources/cover2.jpg">
+								</div>
+								<div class="col-xs-4">
+									<h4 class="product-name"><strong>Software Engineering</strong></h4><h4><small></small></h4>
+								</div>
+								<div class="col-xs-6">
+									<div class="col-xs-6 text-right">
+										<h6><strong>55.00 <span class="text-muted">x</span></strong></h6>
+									</div>
+									<div class="col-xs-4">
+										<input type="text" class="form-control input-sm" value="1">
+									</div>
+									<div class="col-xs-2">
+										<button type="button" class="btn btn-link btn-xs">
+											<span class="glyphicon glyphicon-trash"> </span>
+										</button>
+									</div>
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="text-center">
+									<div class="col-xs-9">
+										<h6 class="text-right">Added items?</h6>
+									</div>
+									<div class="col-xs-3">
+										<button type="button" id="updateButton" class="btn btn-primary btn-sm btn-block">
+											<span class="glyphicon glyphicon-share-alt"></span> Update Cart
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="panel-footer">
+							<div class="row text-center">
+								<div class="col-xs-9">
+									<h4 class="text-right">Total <strong>$70.00</strong></h4>
+								</div>
+								<div class="col-xs-3">
+									<button type="button" id="checkoutButton" class="btn btn-primary btn-sm btn-block">
+											<span class="glyphicon glyphicon-share-alt"></span> Checkout
+										</button>
+  								</div>
+  							</div>
+						</div> 
 					</div>
 				</div>
 			</div>
-			
-		<br>
+		</div>
+		
 		<!-- FOOTER -->
 		<footer class="container-fluid text-center">
 		  <p>Online Store Copyright</p>  

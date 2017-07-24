@@ -42,8 +42,29 @@ DbPersistImpl persist;
 		return persist.checkUserLogin(username, hash);
 	}
 
+	//get the first name for UI display
 	public String getFirstName(String username) {
 		return persist.getFirstName(username);
+	}
+
+	//get the user type for proper UI elements based on permissions
+	public int getUserType(String username) {
+		return persist.getUserType(username);
+	}
+
+	//get the user's db ID number
+	public int getUserID(String username) {
+		return persist.getUserID(username);
+	}
+
+	//get all the books for display
+	public ArrayList<Book> getAllBooks() {
+		return persist.getAllBooks();
+	}
+
+	//get all info for a single book
+	public Book getAllBookInfo(int ISBN) {
+		return persist.getAllBookInfo(ISBN);
 	}
 	
 }//end class

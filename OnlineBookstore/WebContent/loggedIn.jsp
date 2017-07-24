@@ -54,60 +54,73 @@
 		      </ul>
 		      <ul class="nav navbar-nav navbar-right">
 		        <li><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="caret"></span>  
-		        
-		        <c:choose>
-    				<c:when test="${not empty name}">
-				        Hello, ${name} 
-				    </c:when>    
+		        	Hello, ${name}
+				
+				<c:choose>
+    				<c:when test="${userType eq 2}">
+							 <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+						      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">User Profile</a></li>
+						      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Subscription Status</a></li>
+						      <li role="presentation" class="divider"></li>    
+						      <form form id="logoutForm" action="BookstoreServlet" method="post">
+								  <input type="hidden" name="logout" value="logout">
+						      	  <li role="presentation"><a role="menuitem" tabindex="-1" style="margin-left: 20px" "href="#" onclick="$(this).closest('form').submit()">Logout</a></li>
+						      </form>
+							  </ul>
+							  
+					</c:when>    
 				    <c:otherwise>
-				        Your Account 
+				       <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+					      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Daily Report</a></li>
+					      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Low Inventory Status</a></li>
+					      <li role="presentation" class="divider"></li>    
+					      <li role="presentation"><form id="logoutForm" action="BookstoreServlet" method="post">
+								            		<button id="logoutButton" name="logout">Logout </button>
+								          		  </form></li>
+						  </ul>
 				    </c:otherwise>
 				</c:choose>
 				
-				 <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">HTML</a></li>
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">CSS</a></li>
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">JavaScript</a></li>
-      <li role="presentation" class="divider"></li>
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">About Us</a></li>    
-    </ul>
 		        </a></li>
-		        <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span>Cart</a></li>
+		        <li><a href="#" onclick="document.forms['displayCart'].submit()"><span class="glyphicon glyphicon-shopping-cart" ></span>Cart</a></li>
 		      </ul>
 		    </div>
 		  </div>
 		  
+		  <form action="CartServlet" name="displayCart" method="post">
+			<input type="hidden" name="displayCart" value="cart">
+		  </form>
+		  
 		</nav>
 	
-
+	
 		<!-- BOOK ITEMS -->
-		<div class="container">    
-		  <div class="row">
-		   <div class="col-sm-4">
-		      <div class="panel panel-primary">
-		        <div class="panel-heading">Title</div>
-		        <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
-		        <div class="panel-footer">Book description</div>
-		      </div>
-		    </div>
-		    
-		    <div class="col-sm-4">
-		      <div class="panel panel-primary">
-		        <div class="panel-heading">Title</div>
-		        <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
-		        <div class="panel-footer">Book description</div>
-		      </div>
-		    </div>
-		    
-		    <div class="col-sm-4">
-		      <div class="panel panel-primary">
-		        <div class="panel-heading">Title</div>
-		        <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
-		        <div class="panel-footer">Book description</div>
-		      </div>
-		    </div>
-		  </div>
-		</div>
+		<div data-role="page" >
+	         	<div class="container">    
+					<div class="row">			
+						<c:forEach items="${books}" var="b">
+							<div class="col-sm-4">
+								<div class="panel panel-primary">
+								<div class="panel-heading">${b.bookName}</div>
+								<div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
+								<div class="panel-footer">
+									Author: ${b.author}
+									<hr>
+									Description: ${b.description}
+									<hr>
+									Price: $ ${b.price}
+									<hr>
+									<form action="BookHandlerServlet" name="bookHandler" method="post">
+										<button type="submit" class="btn btn-primary btn-md" name="moreInfo" value="${b.ISBN}">View More Info</button>
+										<button type="submit" class="btn btn-primary btn-md" name="add" value="${b.ISBN}">Add to Cart</button>
+									</form>
+								</div>
+								</div>
+							</div> 
+	           			</c:forEach>
+					</div>
+				</div>
+			</div>
 		
 		
 		

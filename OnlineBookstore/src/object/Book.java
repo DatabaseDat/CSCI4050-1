@@ -6,6 +6,7 @@ public class Book {
 	private long ISBN;
 	private double price;
 	private String category;
+	private String description;
 	
 	public Book(){
 		this.bookName = null;
@@ -13,14 +14,16 @@ public class Book {
 		this.ISBN = -1;
 		this.price = -1;
 		this.category = null;
+		this.setDescription(null);
 	}
 	
-	public Book (String bName, String a, long isbn, double p, String c){
+	public Book (String bName, String a, long isbn, double p, String c, String d){
 		this.setAuthor(a);
 		this.setBookName(bName);
 		this.setISBN(isbn);
 		this.setPrice(p);
 		this.setCategory(c);
+		this.setDescription(d);
 	}
 	
 	public String getBookName() {
@@ -54,6 +57,14 @@ public class Book {
 		this.category = c;
 	}
 	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
 	public Book getBookDetails(){
 		Book b = new Book();
 		b.setBookName(this.bookName);
@@ -61,9 +72,12 @@ public class Book {
 		b.setISBN(this.ISBN);
 		b.setPrice(this.price);
 		b.setCategory(this.category);
+		b.setDescription(this.description);
 		
 		return b;
 	}
+
+	
 	
 	
 }
