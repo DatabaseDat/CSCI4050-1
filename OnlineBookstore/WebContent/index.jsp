@@ -217,7 +217,7 @@
 							<div class="col-sm-4">
 								<div class="panel panel-primary">
 								<div class="panel-heading">${b.bookName}</div>
-								<div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
+								<div class="panel-body"><img src="${b.CoverPhoto}" class="img-responsive" style="width:100%" alt="Image"></div>
 								<div class="panel-footer">
 									Author: ${b.author}
 									<hr>
