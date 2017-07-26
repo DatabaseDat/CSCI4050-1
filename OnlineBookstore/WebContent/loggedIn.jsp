@@ -48,7 +48,7 @@
 		    </div>
 		    <div class="collapse navbar-collapse" id="myNavbar">
 		      <ul class="nav navbar-nav">
-		        <li class="active"><a href="#">Home</a></li>
+		        <li class="active"><a href="#" onclick="document.forms['home'].submit()">Home</a></li>
 		        <li><a href="#">Deals</a></li>
 		        <li><a href="#">Contact</a></li>
 		      </ul>
@@ -88,7 +88,12 @@
 		  </div>
 		  
 		  <form action="CartServlet" name="displayCart" method="post">
+		  	<input type="hidden" name="returnTo" value="loggedIn.jsp">
 			<input type="hidden" name="displayCart" value="cart">
+		  </form>
+		  
+		  <form action="BookstoreServlet" name="home" method="post">
+			<input type="hidden" name="home" value="home">
 		  </form>
 		  
 		</nav>
@@ -111,6 +116,7 @@
 									Price: $ ${b.price}
 									<hr>
 									<form action="BookHandlerServlet" name="bookHandler" method="post">
+										<input type = "hidden" name="returnTo" value="loggedIn.jsp">
 										<button type="submit" class="btn btn-primary btn-md" name="moreInfo" value="${b.ISBN}">View More Info</button>
 										<button type="submit" class="btn btn-primary btn-md" name="add" value="${b.ISBN}">Add to Cart</button>
 									</form>

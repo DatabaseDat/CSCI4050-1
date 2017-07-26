@@ -3,7 +3,9 @@ package persistance;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -132,9 +134,9 @@ public class DbPersistImpl {
 		
 //----------------------------------------------------------------------------------------------------------------------------------------------------------		
 
-		public Book getAllBookInfo(int ISBN) {
+		public Book getAllBookInfo(long iSBN) {
 			Book b = new Book();
-			String sql = "SELECT * FROM books WHERE books.ISBN= '" + ISBN + "';";
+			String sql = "SELECT * FROM books WHERE books.ISBN= '" + iSBN + "';";
 			ResultSet rs = DbAccessImpl.retrieve(sql);
 
 			try {
@@ -151,5 +153,38 @@ public class DbPersistImpl {
 			}
 			
 			return b;
+		}
+		
+//----------------------------------------------------------------------------------------------------------------------------------------------------------		
+
+		public int addBookToCart(Book b, int userID) {
+			int quantity = 1;
+			String sql = "INSERT INTO shoppingcart (UserID, ISBN, ActualPrice, Quantity) VALUES"
+					+ "('"+userID+"','"+b.getISBN()+"', '"+b.getPrice()+"', '"+quantity+"');";			
+			return DbAccessImpl.create(sql);
+		}
+		
+//----------------------------------------------------------------------------------------------------------------------------------------------------------		
+
+		public ArrayList<ShoppingCart> getBooksFromCart(int userID) {
+			String sql = "SELECT * FROM shoppingcart WHERE UserID = '" + userID + "';";
+			ArrayList<ShoppingCart> tempList = new ArrayList<ShoppingCart>();
+			ResultSet rs = DbAccessImpl.retrieve(sql);
+			try {
+				while(rs.next()) {
+					Book b = getAllBookInfo(rs.getLong("ISBN"));
+					ShoppingCart s = new ShoppingCart(rs.getInt("UserID"), rs.getLong("ISBN"), rs.getDouble("ActualPrice"), rs.getInt("Quantity"), b);
+					tempList.add(s);	
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return tempList;
+		}
+		
+//----------------------------------------------------------------------------------------------------------------------------------------------------------		
+		public int deleteBook(String ISBN) {
+			String sql = "DELETE * FROM shoppingcart WHERE ISBN = '" + ISBN + "';";
+			return 0;
 		}
 }

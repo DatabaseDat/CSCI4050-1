@@ -48,7 +48,7 @@
 		    </div>
 		    <div class="collapse navbar-collapse" id="myNavbar">
 		      <ul class="nav navbar-nav">
-		        <li class="active"><a href="#">Home</a></li>
+		        <li class="active"><a href="#" onclick="document.forms['home'].submit()">Home</a></li>
 		        <li><a href="#">Deals</a></li>
 		        <li><a href="#">Contact</a></li>
 		      </ul>
@@ -62,8 +62,13 @@
 		  </div>
 		  
 		  <form action="CartServlet" name="displayCart" method="post">
+		  	<input type="hidden" name="returnTo" value="bookInfoUnregistered.jsp">
 			<input type="hidden" name="displayCart" value="cart">
 		  </form>
+		  
+		   <form action="BookstoreServlet" name="home" method="post">
+				<input type="hidden" name="home" value="home">
+		  	</form>
     			
 			  <!-- Modal -->
 			  <div class="modal fade" id="myModal" role="dialog">
@@ -119,7 +124,7 @@
 					            				</label>
 					            				<input name="email" type="text"required autocomplete="off"/>
 					          				</div>
-					          				<input type="hidden" name="returnTo" value="bookInfo">
+					          				<input type="hidden" name="bookInfo" value="bookInfo">
 					          				<input type="hidden" name="book" value="${book.ISBN}">
 					          				<button class="button button-block" name="register">Get Started</button>
 				          				</form>
@@ -142,7 +147,7 @@
 						            			</label>
 						           				<input type="password"required autocomplete="off" name="password"/>
 						          			</div>
-						          				<input type="hidden" name="returnTo" value="bookInfo">
+						          				<input type="hidden" name="viewBook" value="bookInfo">
 						          				<input type="hidden" name="book" value="${book.ISBN}">
 						          				<p class="forgot"><a href="#">Forgot Password?</a></p>
 						          				<button id="loginButton" class="button button-block" name="login">Log In </button>
@@ -190,7 +195,8 @@
 									<hr>
 									
 									<form action="BookHandlerServlet" name="bookHandler" method="post">
-										<button type="button" class="btn btn-primary btn-md" name="add" value="${book.ISBN}">Add to Cart</button>
+										<input type = "hidden" name="returnTo" value="bookInfoUnregistered.jsp">
+										<button type="submit" class="btn btn-primary btn-md" name="add" value="${book.ISBN}">Add to Cart</button>
 									</form>
 								</div>
 								</div>

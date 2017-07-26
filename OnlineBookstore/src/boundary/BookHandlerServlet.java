@@ -40,8 +40,6 @@ public class BookHandlerServlet extends HttpServlet {
 		String viewMore = request.getParameter("moreInfo");
 		String addToCart = request.getParameter("add");
 		
-		System.out.println(viewMore);
-		System.out.println(addToCart);
 		if (viewMore != null){
 			viewMoreInfo(request, response);
 		}else if (addToCart != null){
@@ -53,28 +51,57 @@ public class BookHandlerServlet extends HttpServlet {
 	
 		
 	private void addToCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
+		if (request.getSession().getAttribute("userID") != null){
+			int userID = (int) request.getSession().getAttribute("userID");
+			long ISBN = Long.parseLong(request.getParameter("add"));
+			DbLogicImpl ctrl = new DbLogicImpl();
+			Book b = ctrl.getAllBookInfo(ISBN);
+			ctrl.addBookToCart(b, userID);
+			
+			request.setAttribute("book", b);
+			request.setAttribute("books", BookstoreServlet.displayBooks(request, response));
+				
+			if (request.getSession().getAttribute("name") != null){
+				request.setAttribute("name", request.getSession().getAttribute("name"));
+				String returnTo = request.getParameter("returnTo");
+				request.getRequestDispatcher(returnTo).forward(request, response);
+			}
+		}else{
+			request.setAttribute("errorMsg", "Please log in to add books to cart.");
+			String returnTo = request.getParameter("returnTo");
+			request.getRequestDispatcher(returnTo).forward(request, response);
+		}
 	}
 
 //--------------------VIEW MORE INFO --------------------------------------------------------------------------------------------------------------------------------- 
 
 	static void viewMoreInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int ISBN = Integer.parseInt(request.getParameter("moreInfo"));
+		long ISBN = -1;
+		
+		if (request.getSession().getAttribute("comingFromLogin") != null){
+			ISBN = Long.parseLong(request.getSession().getAttribute("ISBN").toString());
+		}else{
+			ISBN = Long.parseLong(request.getParameter("moreInfo"));
+		}
+		
 		DbLogicImpl ctrl = new DbLogicImpl();
 		Book b = ctrl.getAllBookInfo(ISBN);
 		request.setAttribute("book", b);
 		request.setAttribute("books", BookstoreServlet.displayBooks(request, response));
 			
 		if (request.getSession().getAttribute("name") != null){
-			System.out.println("reg");
 			request.setAttribute("name", request.getSession().getAttribute("name"));
-			request.getRequestDispatcher("bookInfoRegistered.jsp").forward(request, response);
-		}else{
-			System.out.println("unreg");
-			request.getRequestDispatcher("bookInfoUnregistered.jsp").forward(request, response);
-		}
+			request.getSession().setAttribute("book", b);
+			if (request.getSession().getAttribute("name") != null){
+				request.setAttribute("name", request.getSession().getAttribute("name"));
+				String returnTo = request.getParameter("returnTo");
+				request.getRequestDispatcher(returnTo).forward(request, response);
+			}		}else{
+			request.getSession().invalidate();
+			String returnTo = request.getParameter("returnTo");
+			request.getRequestDispatcher(returnTo).forward(request, response);		}
 	}
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

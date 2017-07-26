@@ -19,14 +19,14 @@ import object.ShoppingCart;
 /**
  * Servlet implementation class BookstoreServlet
  */
-@WebServlet("/CartServlet")
-public class CartServlet extends HttpServlet {
+@WebServlet("/CheckoutServlet")
+public class CheckoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 		
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CartServlet() {
+    public CheckoutServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -39,17 +39,14 @@ public class CartServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String display = request.getParameter("displayCart");
-		String deleteItem = request.getParameter("deleteItem");
-		if (display != null) {
-			displayCart (request, response);
-		}else if (deleteItem != null){
-			deleteItem(request, response);
+		String checkout = request.getParameter("checkout");
+		if (checkout != null) {
+			checkout (request, response);
 		}
 	}
 
-//--------------------DISPLAY CART---------------------------------------------------------------------------------------------------------------------------------- 
-	private void displayCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//--------------------CHECKOUT---------------------------------------------------------------------------------------------------------------------------------- 
+	private void checkout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (request.getSession().getAttribute("userID") != null){
 			int userID = (int) request.getSession().getAttribute("userID");
 			double total = 0;
@@ -67,22 +64,11 @@ public class CartServlet extends HttpServlet {
 			request.setAttribute("total", total);
 			request.setAttribute("booksInCart", booksInCart);
 			request.setAttribute("name", request.getSession().getAttribute("name"));
-			request.getRequestDispatcher("cart.jsp").forward(request, response);
+			request.getRequestDispatcher("checkout.jsp").forward(request, response);
 		}else{
 			request.setAttribute("errorMsg", "You must log in to add books to cart or to view cart.");
 			String returnTo = request.getParameter("returnTo");
 			request.getRequestDispatcher(returnTo).forward(request, response);
-		}
-	}
-	
-//--------------------DELETE ITEM FROM CART---------------------------------------------------------------------------------------------------------------------------------- 
-	private void deleteItem(HttpServletRequest request, HttpServletResponse response) {
-		if (request.getSession().getAttribute("userID") != null){
-			int userID = (int) request.getSession().getAttribute("userID");
-			double total = 0;
-			
-			DbLogicImpl ctrl = new DbLogicImpl();
-			ctrl.deleteBook(request.getParameter("bookToDelete"));
 		}
 	}
 	

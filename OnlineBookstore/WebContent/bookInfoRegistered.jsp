@@ -48,7 +48,7 @@
 		    </div>
 		    <div class="collapse navbar-collapse" id="myNavbar">
 		      <ul class="nav navbar-nav">
-		        <li class="active"><a href="#">Home</a></li>
+		        <li class="active"><a href="#" onclick="document.forms['home'].submit()">Home</a></li>
 		        <li><a href="#">Deals</a></li>
 		        <li><a href="#">Contact</a></li>
 		      </ul>
@@ -74,9 +74,10 @@
 					      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Daily Report</a></li>
 					      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Low Inventory Status</a></li>
 					      <li role="presentation" class="divider"></li>    
-					      <li role="presentation"><form id="logoutForm" action="BookstoreServlet" method="post">
-								            		<button id="logoutButton" name="logout">Logout </button>
-								          		  </form></li>
+						      <form form id="logoutForm" action="BookstoreServlet" method="post">
+								  <input type="hidden" name="logout" value="logout">
+						      	  <li role="presentation"><a role="menuitem" tabindex="-1" style="margin-left: 20px" "href="#" onclick="$(this).closest('form').submit()">Logout</a></li>
+						      </form>
 						  </ul>
 				    </c:otherwise>
 				</c:choose>
@@ -88,8 +89,13 @@
 		  </div>
 		  
 		  <form action="CartServlet" name="displayCart" method="post">
+		  	<input type="hidden" name="returnTo" value="bookInfoRegister.jsp">
 			<input type="hidden" name="displayCart" value="cart">
 		  </form>
+		  
+		   <form action="BookstoreServlet" name="home" method="post">
+				<input type="hidden" name="home" value="home">
+		   </form>
 		</nav>
 		
 		<div id="incorrectLogin">
@@ -123,6 +129,7 @@
 									<hr>
 									
 									<form action="BookHandlerServlet" name="bookHandler" method="post">
+										<input type = "hidden" name="returnTo" value="bookInfoRegistered.jsp">
 										<button type="button" class="btn btn-primary btn-md" name="add" value="${book.ISBN}">Add to Cart</button>
 									</form>
 								</div>

@@ -39,95 +39,9 @@
 		        <li><a href="#">Deals</a></li>
 		        <li><a href="#">Contact</a></li>
 		      </ul>
-		      <ul class="nav navbar-nav navbar-right">
-		        <li><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-user" data-toggle="modal" data-target="#myModal"></span> Your Account</a></li>
-		        <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
-		      </ul>
+		      
+		      </div>
 		    </div>
-		  </div>
-		  
-		  <!-- Modal -->
-		  <div class="modal fade" id="myModal" role="dialog">
-		    <div class="modal-dialog">
-		      <!-- Modal content-->
-		          <!-- LOGIN/REGISTER -->
-						<button type="button" id="modalButton" class="btn btn-default" data-dismiss="modal">X</button>
-						<div class="form">
-					    	<ul class="tab-group">
-			        			<li class="tab active"><a href="#signup">Sign Up</a></li>
-			        			<li class="tab"><a href="#logintab">Log In</a></li>
-			      		  	</ul>
-			      
-			      			<div class="tab-content">
-			        			<div id="signup">   
-			          				<h1>Sign Up for Free</h1>
-			          
-			        				<form action="/" method="post">
-			          
-				         				<div class="top-row">
-				            				<div class="field-wrap">
-				              					<label>
-				                					First Name<span class="req">*</span>
-				              					</label>
-				              					<input type="text" required autocomplete="off" />
-				            				</div>
-				        
-				            				<div class="field-wrap">
-				              					<label>
-				                					Last Name<span class="req">*</span>
-				              					</label>
-				              					<input type="text"required autocomplete="off"/>
-				            				</div>
-				          				</div>
-				
-				          				<div class="field-wrap">
-				            				<label>
-				              					Email Address<span class="req">*</span>
-				            				</label>
-				            				<input type="email"required autocomplete="off"/>
-				          				</div>
-				          
-				          				<div class="field-wrap">
-				            				<label>
-				              					Set A Password<span class="req">*</span>
-				            				</label>
-				            				<input type="password"required autocomplete="off"/>
-				          				</div>
-				          
-				          				<button type="submit" class="button button-block">Get Started</button>
-			          				</form>
-			        			</div>
-			        
-				        		<div id="logintab">   
-				          			<h1>Welcome Back!</h1>
-				          
-				        		  	<form action="/" method="post">
-					            		<div class="field-wrap">
-					            			<label>
-					              				Email Address<span class="req">*</span>
-					            			</label>
-					            			<input type="email"required autocomplete="off"/>
-					          			</div>
-					          
-					          			<div class="field-wrap">
-					            			<label>
-					              				Password<span class="req">*</span>
-					            			</label>
-					           				<input type="password"required autocomplete="off"/>
-					          			</div>
-					          				<p class="forgot"><a href="#">Forgot Password?</a></p>
-					          				<button class="button button-block">Log In </button>
-					          		</form>
-						        </div>
-			      			</div>
-			 			<br>
-			 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-						<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-						<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-						<script src="./Scripts/loginRegister.js"></script>
-						</div>
-					</div> <!-- end login/register form -->
-		        </div>
 		</nav>
 		
 		<!-- CHECKOUT FORM -->
@@ -145,49 +59,7 @@
              
                     <div class="panel panel-info">
                         <div class="panel-heading" id="panelHeaders">
-                            <p>Review Order</p>
-                        </div>
-                        <div class="panel-body">
-                            <div class="form-group">
-                                <div class="col-sm-3 col-xs-3">
-                                    <img class="img-responsive" src="./Resources/cover4.jpg" />
-                                </div>
-                                <div class="col-sm-6 col-xs-6">
-                                    <div class="col-xs-12">Lord of the Rings</div>
-                                    <div class="col-xs-12"><small>Quantity:<span>1</span></small></div>
-                                </div>
-                                <div class="col-sm-3 col-xs-3 text-right">
-                                    <h6><span>$</span>15.00</h6>
-                                </div>
-                            </div>
-                            <div class="form-group"><hr /></div>
-                            <div class="form-group">
-                                <div class="col-sm-3 col-xs-3">
-                                    <img class="img-responsive" src="./Resources/cover2.jpg" />
-                                </div>
-                                <div class="col-sm-6 col-xs-6">
-                                    <div class="col-xs-12">Software Engineering</div>
-                                    <div class="col-xs-12"><small>Quantity:<span>1</span></small></div>
-                                </div>
-                                <div class="col-sm-3 col-xs-3 text-right">
-                                    <h6><span>$</span>55.00</h6>
-                                </div>
-                            </div>
-                            <div class="form-group"><hr /></div>
-                            <div class="form-group">
-  
-                                <div class="col-xs-12">
-                                    <small>Shipping</small>
-                                    <div class="pull-right"><span>-</span></div>
-                                </div>
-                            </div>
-                            <div class="form-group"><hr /></div>
-                            <div class="form-group">
-                                <div class="col-xs-12">
-                                    <strong>Order Total</strong>
-                                    <div class="pull-right"><span>$</span><span>70.00</span></div>
-                                </div>
-                            </div>
+                            <h3>Order Total - $${total}</h3>
                         </div>
                     </div>
                 </div>

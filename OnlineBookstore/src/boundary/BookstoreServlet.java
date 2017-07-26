@@ -45,12 +45,16 @@ public class BookstoreServlet extends HttpServlet {
 			String login = request.getParameter("login");
 			String register = request.getParameter("register");
 			String logout = request.getParameter("logout");
+			String home = request.getParameter("home");
+			
 			if (login != null) {
 				login (request, response);
 			}else if (register != null){
 				register (request, response);
 			}else if (logout != null){
 				logout(request, response);
+			}else if (home != null){
+				displayAll(request, response);
 			}
 		}
 	}
@@ -62,7 +66,6 @@ public class BookstoreServlet extends HttpServlet {
 	      
 	      // Check if this is new comer on your web page.
 	      if (session.isNew()) {
-	    	  System.out.println("here");
 	    	  String username = request.getParameter("username");
 	    	  String password = request.getParameter("password");
 		  		
@@ -81,20 +84,23 @@ public class BookstoreServlet extends HttpServlet {
 	    	  if (success == 1){
 	    		  session.setAttribute("name", firstName);
 	    		  session.setAttribute("userID", userID);
+	    		  session.setAttribute("userType", userType);
 	    		  request.setAttribute("name", firstName);
     			  request.setAttribute("userType", userType);
     			  request.setAttribute("books", displayBooks(request, response));
-    			  
-    			  if (returnTo != null){  
-    				  BookHandlerServlet.viewMoreInfo(request, response);
-    			  }else{
-    				  request.getRequestDispatcher("loggedIn.jsp").forward(request, response);
-    			  }
+    			if (returnTo != null){ 
+    				Book b = new Book();
+    				b.setISBN(Long.parseLong(request.getParameter("book")));
+    				session.setAttribute("ISBN", b.getISBN());
+    				session.setAttribute("comingFromLogin", "true");
+    				BookHandlerServlet.viewMoreInfo(request, response);
+    			 }else{
+    			  	request.getRequestDispatcher("loggedIn.jsp").forward(request, response);
+    			 }
 	    	  }else{
 	    		  session.invalidate();
     			  request.setAttribute("books", displayBooks(request, response));
 	    		  request.setAttribute("errorMsg", "Incorrect username or password");
-	    		  
 	    		  if (returnTo != null){
 	    			  BookHandlerServlet.viewMoreInfo(request, response);
 	    		  }else{
@@ -121,12 +127,17 @@ public class BookstoreServlet extends HttpServlet {
 		//checks to see if the username already exists in the database
   		//lets user register if not in db, otherwise gives an error message
   		int check = ctrl.checkUser(username);
+  		int userID = ctrl.getUserID(username);
+  		int userType = ctrl.getUserType(username);
   		
   		if (session.isNew()) {
 	  		if (check == 0){
 	  			ctrl.registerUser(firstName, lastName, username, email, password, hash);
-	  			session.setAttribute("name", ctrl.getFirstName(username));
-	  			request.setAttribute("name", ctrl.getFirstName(username));
+	  			session.setAttribute("name", firstName);
+	    		session.setAttribute("userID", userID);
+	    		session.setAttribute("userType", userType);
+	    		request.setAttribute("name", firstName);
+	    		request.setAttribute("userType", userType);
 	  			request.setAttribute("books", displayBooks(request, response));
 	  			request.getRequestDispatcher("index.jsp").forward(request, response);
 	  		}else{
@@ -150,8 +161,7 @@ public class BookstoreServlet extends HttpServlet {
 	
 //--------------------DISPLAY - INITIAL LOAD------------------------------------------------------------------------------------------------------------------------------- 
 
-	private void displayAll(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println(firstCall);
+	public void displayAll(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		firstCall++;
 		DbLogicImpl ctrl = new DbLogicImpl();
 		ArrayList<Book> books = new ArrayList<Book>();

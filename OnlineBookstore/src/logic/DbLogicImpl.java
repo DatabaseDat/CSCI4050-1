@@ -63,8 +63,23 @@ DbPersistImpl persist;
 	}
 
 	//get all info for a single book
-	public Book getAllBookInfo(int ISBN) {
-		return persist.getAllBookInfo(ISBN);
+	public Book getAllBookInfo(long iSBN) {
+		return persist.getAllBookInfo(iSBN);
+	}
+
+	//add book to shopping cart
+	public int addBookToCart(Book b, int userID) {
+		return persist.addBookToCart(b, userID);
+	}
+
+	//get all the books in the cart for a person
+	public ArrayList<ShoppingCart> getBooksFromCart(int userID) {
+		return persist.getBooksFromCart(userID);
+	}
+
+	//delete book from database
+	public int deleteBook(String ISBN) {
+		return persist.deleteBook(ISBN);
 	}
 	
 }//end class
