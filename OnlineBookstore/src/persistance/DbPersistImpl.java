@@ -173,7 +173,7 @@ public class DbPersistImpl {
 			try {
 				while(rs.next()) {
 					Book b = getAllBookInfo(rs.getLong("ISBN"));
-					ShoppingCart s = new ShoppingCart(rs.getInt("UserID"), rs.getLong("ISBN"), rs.getDouble("ActualPrice"), rs.getInt("Quantity"), b);
+					ShoppingCart s = new ShoppingCart(rs.getInt("UserID"), rs.getLong("ISBN"), rs.getDouble("ActualPrice"), rs.getInt("Quantity"), b, rs.getInt("CartID"));
 					tempList.add(s);	
 				}
 			} catch (SQLException e) {
@@ -183,8 +183,16 @@ public class DbPersistImpl {
 		}
 		
 //----------------------------------------------------------------------------------------------------------------------------------------------------------		
-		public int deleteBook(String ISBN) {
-			String sql = "DELETE * FROM shoppingcart WHERE ISBN = '" + ISBN + "';";
-			return 0;
+		
+		public int deleteBook(int cartID) {
+			String sql = "DELETE FROM shoppingcart WHERE cartID = '" + cartID + "';";
+			return DbAccessImpl.delete(sql);
+		}
+		
+//----------------------------------------------------------------------------------------------------------------------------------------------------------		
+
+		public int updateCart(int cartID, int quantity) {
+			String sql = "UPDATE shoppingcart SET Quantity = '" + quantity + "' WHERE CartID = '" + cartID + "';";
+			return DbAccessImpl.update(sql);
 		}
 }

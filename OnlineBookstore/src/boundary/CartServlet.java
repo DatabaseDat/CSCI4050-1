@@ -40,11 +40,14 @@ public class CartServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String display = request.getParameter("displayCart");
-		String deleteItem = request.getParameter("deleteItem");
+		String deleteItem = request.getParameter("delete");
+		String updateCart = request.getParameter("updateCart");
 		if (display != null) {
 			displayCart (request, response);
 		}else if (deleteItem != null){
 			deleteItem(request, response);
+		}else if (updateCart != null){
+			updateCart(request, response);
 		}
 	}
 
@@ -57,7 +60,6 @@ public class CartServlet extends HttpServlet {
 			DbLogicImpl ctrl = new DbLogicImpl();
 			ArrayList<ShoppingCart> booksInCart = new ArrayList<ShoppingCart>();
 			booksInCart = ctrl.getBooksFromCart(userID);	
-			
 			for (ShoppingCart s : booksInCart){
 				total += s.getPrice();
 			}
@@ -76,14 +78,49 @@ public class CartServlet extends HttpServlet {
 	}
 	
 //--------------------DELETE ITEM FROM CART---------------------------------------------------------------------------------------------------------------------------------- 
-	private void deleteItem(HttpServletRequest request, HttpServletResponse response) {
-		if (request.getSession().getAttribute("userID") != null){
-			int userID = (int) request.getSession().getAttribute("userID");
-			double total = 0;
-			
-			DbLogicImpl ctrl = new DbLogicImpl();
-			ctrl.deleteBook(request.getParameter("bookToDelete"));
+	private void deleteItem(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		DbLogicImpl ctrl = new DbLogicImpl();
+		ctrl.deleteBook(Integer.parseInt(request.getParameter("bookToDelete")));
+		int userID = (int) request.getSession().getAttribute("userID");
+		double total = 0;
+		
+		ArrayList<ShoppingCart> booksInCart = new ArrayList<ShoppingCart>();
+		booksInCart = ctrl.getBooksFromCart(userID);	
+		for (ShoppingCart s : booksInCart){
+			total += s.getPrice();
 		}
+		
+		total = Math.round(total * 100.0) / 100.0;
+		
+		request.setAttribute("total", total);
+		request.setAttribute("booksInCart", booksInCart);
+		request.setAttribute("name", request.getSession().getAttribute("name"));
+		request.getRequestDispatcher("cart.jsp").forward(request, response);
+	}
+	
+//--------------------UPDATE CART---------------------------------------------------------------------------------------------------------------------------------- 	
+	private void updateCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		DbLogicImpl ctrl = new DbLogicImpl();
+		request.getSession().getAttribute("userID");
+		System.out.println("bookID: " + Integer.parseInt(request.getParameter("bookToUpdate")));
+		int cartID = Integer.parseInt(request.getParameter("bookToUpdate"));
+		int quantity = Integer.parseInt(request.getParameter("quantity"));
+		ctrl.updateCart(cartID, quantity);
+		int userID = (int) request.getSession().getAttribute("userID");
+		double total = 0;
+		
+		ArrayList<ShoppingCart> booksInCart = new ArrayList<ShoppingCart>();
+		booksInCart = ctrl.getBooksFromCart(userID);	
+		for (ShoppingCart s : booksInCart){
+			total += s.getPrice();
+		}
+		
+		total = Math.round(total * 100.0) / 100.0;
+		
+		request.setAttribute("total", total);
+		request.setAttribute("booksInCart", booksInCart);
+		request.setAttribute("name", request.getSession().getAttribute("name"));
+		request.getRequestDispatcher("cart.jsp").forward(request, response);
 	}
 	
 	

@@ -77,9 +77,14 @@ DbPersistImpl persist;
 		return persist.getBooksFromCart(userID);
 	}
 
-	//delete book from database
-	public int deleteBook(String ISBN) {
-		return persist.deleteBook(ISBN);
+	//delete book from shopping cart
+	public int deleteBook(int cartID) {
+		return persist.deleteBook(cartID);
+	}
+
+	//update cart quantities
+	public int updateCart(int cartID, int quantity) {
+		return persist.updateCart(cartID, quantity);
 	}
 	
 }//end class

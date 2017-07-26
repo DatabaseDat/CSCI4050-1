@@ -89,15 +89,15 @@
 										<h6><strong>$ ${b.price} <span class="text-muted">x</span></strong></h6>
 									</div>
 									<div class="col-xs-4">
-										<input type="text" class="form-control input-sm" value="${b.quantity}">
+									<form action="CartServlet" name="updateCart" method="post" >
+										<input type="text" class="form-control input-sm" name="quantity" value="${b.quantity}">
+										<input type="hidden" name="bookToUpdate" value="${b.cartID}">
 									</div>
 									<div class="col-xs-2">
-									  <form action="CartServlet" name="deleteItem" value="delete">
-									  	<input type="hidden" name="bookToDelete" value="${b.ISBN}">
-										<button type="submit" class="btn btn-link btn-xs">
+									  	<input type="hidden" name="bookToDelete" value="${b.cartID}">
+										<button type="submit" class="btn btn-link btn-xs" name="delete" value="delete">
 											<span class="glyphicon glyphicon-trash"> </span>
 										</button>
-									  </form>
 									</div>
 								</div>
 							</div>
@@ -111,9 +111,10 @@
 										<h6 class="text-right">Added items?</h6>
 									</div>
 									<div class="col-xs-3">
-										<button type="button" id="updateButton" class="btn btn-primary btn-sm btn-block">
-											<span class="glyphicon glyphicon-share-alt"></span> Update Cart
-										</button>
+											<button type="submit" id="updateButton" class="btn btn-primary btn-sm btn-block" name="updateCart" value="update">
+												<span class="glyphicon glyphicon-share-alt"></span> Update Cart
+											</button>
+									</form>
 									</div>
 								</div>
 							</div>

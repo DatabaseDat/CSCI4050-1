@@ -1,6 +1,7 @@
 package object;
 
 public class ShoppingCart {
+	private int cartID;
 	private int userID;
 	private long ISBN;
 	private double price;
@@ -15,15 +16,17 @@ public class ShoppingCart {
 		this.quantity = -1;
 		this.setBook(null);
 		this.setBookName(null);
+		this.cartID = -1;
 	}
 	
-	public ShoppingCart(int userID, long ISBN, double price, int quantity, Book book){
+	public ShoppingCart(int userID, long ISBN, double price, int quantity, Book book, int cartID){
 		this.userID = userID;
 		this.ISBN = ISBN;
 		this.price = price;
 		this.quantity = quantity;
 		this.setBook(book);
 		this.setBookName(book.getBookName());
+		this.cartID = cartID;
 	}
 
 	public int getUserID() {
@@ -72,6 +75,14 @@ public class ShoppingCart {
 
 	public void setBook(Book book) {
 		this.book = book;
+	}
+
+	public int getCartID() {
+		return cartID;
+	}
+
+	public void setCartID(int cartID) {
+		this.cartID = cartID;
 	}
 	
 	
